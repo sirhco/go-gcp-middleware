@@ -150,3 +150,8 @@ Upgrade packages to see if semconv upgrade will fix compatability
 [1.3.0] - 02-23-2026
 
 Set packages to v1.38.0 for opentelemetry
+
+### Changed
+[1.4.0] - 02-23-2026
+
+Set packages to v1.37.0 for opentelemetry to support latest versions of google libs like firestore, longrunning
