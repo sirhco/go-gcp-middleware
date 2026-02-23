@@ -1,0 +1,152 @@
+version: '3'
+
+vars:
+  GOCMD: go
+  BINARY_NAME: middleware
+  EXAMPLES_DIR: ./examples
+
+tasks:
+  default:
+    desc: Display available tasks
+    cmds:
+      - task --list
+    silent: true
+
+  deps:
+    desc: Download dependencies
+    cmds:
+      - "{{.GOCMD}} mod download"
+      - "{{.GOCMD}} mod tidy"
+
+  build:
+    desc: Build the package
+    deps: [deps]
+    cmds:
+      - "{{.GOCMD}} build -v ./..."
+
+  test:
+    desc: Run tests
+    cmds:
+      - "{{.GOCMD}} test -v -short ./..."
+
+  test:coverage:
+    desc: Run tests with coverage
+    cmds:
+      - "{{.GOCMD}} test -v -short -coverprofile=coverage.out -covermode=atomic ./..."
+      - "{{.GOCMD}} tool cover -html=coverage.out -o coverage.html"
+      - 'echo "Coverage report generated: coverage.html"'
+
+  test:race:
+    desc: Run tests with race detector
+    cmds:
+      - "{{.GOCMD}} test -v -short -race ./..."
+
+  test:integration:
+    desc: Run integration tests (requires GCP credentials)
+    cmds:
+      - "{{.GOCMD}} test -v -tags=integration ./..."
+
+  lint:
+    desc: Run golangci-lint
+    preconditions:
+      - sh: which golangci-lint
+        msg: "golangci-lint not found. Run 'task install-tools'"
+    cmds:
+      - golangci-lint run --timeout 5m
+
+  fmt:
+    desc: Format code
+    cmds:
+      - "{{.GOCMD}} fmt ./..."
+
+  vet:
+    desc: Run go vet
+    cmds:
+      - "{{.GOCMD}} vet ./..."
+
+  check:
+    desc: Run format, vet, and tests
+    cmds:
+      - task: fmt
+      - task: vet
+      - task: test
+
+  clean:
+    desc: Clean build artifacts
+    cmds:
+      - "{{.GOCMD}} clean"
+      - rm -f coverage.out coverage.html
+      - rm -rf bin/
+
+  examples:
+    desc: Build example binaries
+    cmds:
+      - 'echo "Building examples..."'
+      - mkdir -p bin
+      - "{{.GOCMD}} build -o bin/basic-example {{.EXAMPLES_DIR}}/basic/main.go"
+      - "{{.GOCMD}} build -o bin/advanced-example {{.EXAMPLES_DIR}}/advanced/main.go"
+      - 'echo "Examples built in bin/"'
+
+  run:basic:
+    desc: Run basic example (set GOOGLE_CLOUD_PROJECT first)
+    deps: [examples]
+    cmds:
+      - 'echo "Running basic example (set GOOGLE_CLOUD_PROJECT first)..."'
+      - ./bin/basic-example
+
+  run:advanced:
+    desc: Run advanced example (set GOOGLE_CLOUD_PROJECT first)
+    deps: [examples]
+    cmds:
+      - 'echo "Running advanced example (set GOOGLE_CLOUD_PROJECT first)..."'
+      - ./bin/advanced-example
+
+  install-tools:
+    desc: Install development tools
+    cmds:
+      - 'echo "Installing development tools..."'
+      - go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+      - 'echo "Tools installed"'
+
+  doc:
+    desc: Generate and serve documentation
+    cmds:
+      - 'echo "Serving documentation at http://localhost:6060"'
+      - |
+        if ! which godoc > /dev/null; then
+          go install golang.org/x/tools/cmd/godoc@latest
+        fi
+      - godoc -http=:6060
+
+  hooks:
+    desc: Install git hooks
+    cmds:
+      - 'echo "Installing git hooks..."'
+      - mkdir -p .git/hooks
+      - |
+        cat > .git/hooks/pre-commit << 'EOF'
+        #!/bin/sh
+        task check
+        EOF
+      - chmod +x .git/hooks/pre-commit
+      - 'echo "Git hooks installed"'
+
+  tag:
+    desc: "Create a new git tag (usage: task tag VERSION=v1.0.0)"
+    preconditions:
+      - sh: '[ -n "{{.VERSION}}" ]'
+        msg: "VERSION is required. Usage: task tag VERSION=v1.0.0"
+    cmds:
+      - git tag -a {{.VERSION}} -m "Release {{.VERSION}}"
+      - git push origin {{.VERSION}}
+      - 'echo "Tag {{.VERSION}} created and pushed"'
+
+  ci:test:
+    desc: Run CI tests
+    cmds:
+      - "{{.GOCMD}} test -v -race -coverprofile=coverage.out -covermode=atomic ./..."
+
+  ci:lint:
+    desc: Run CI linting
+    cmds:
+      - golangci-lint run --timeout 5m --out-format=github-actions
