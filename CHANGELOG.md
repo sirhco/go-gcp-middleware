@@ -145,3 +145,8 @@ Downgrade some packages for compatability
 [1.2.0] - 02-23-2026
 
 Upgrade packages to see if semconv upgrade will fix compatability
+
+### Changed
+[1.3.0] - 02-23-2026
+
+Set packages to v1.38.0 for opentelemetry
