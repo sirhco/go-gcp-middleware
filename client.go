@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/sircho/go-gcp-middleware/logger"
-	"github.com/sircho/go-gcp-middleware/telemetry"
+	"github.com/sirhco/go-gcp-middleware/logger"
+	"github.com/sirhco/go-gcp-middleware/telemetry"
 )
 
 // Config holds the complete middleware configuration

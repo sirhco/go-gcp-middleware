@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/sirch/go-gcp-middleware/logger"
-	"github.com/sirch/go-gcp-middleware/telemetry"
+	"github.com/sirhco/go-gcp-middleware/logger"
+	"github.com/sirhco/go-gcp-middleware/telemetry"
 
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 	"go.opentelemetry.io/otel"

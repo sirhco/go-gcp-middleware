@@ -1,4 +1,4 @@
-module github.com/sircho/go-gcp-middleware
+module github.com/sirhco/go-gcp-middleware
 
 go 1.26
 

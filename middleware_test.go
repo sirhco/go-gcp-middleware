@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/sirch/go-gcp-middleware/logger"
-	"github.com/sirch/go-gcp-middleware/telemetry"
+	"github.com/sirhco/go-gcp-middleware/logger"
+	"github.com/sirhco/go-gcp-middleware/telemetry"
 	"go.opentelemetry.io/otel/trace"
 )
 
