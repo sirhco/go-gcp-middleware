@@ -123,10 +123,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Initial release - placeholder for first tagged version.
 
-[1.0.0]: https://github.com/sircho/go-gcp-middleware/tags
+[1.0.0]: https://github.com/sirhco/go-gcp-middleware/tags
 
-### Added
+### Changed
 
-[1.0.1] - 03-01-2026
+[1.0.1] - 02-22-2026
 
 Updated package name and versioned correctly
+
+### Changed
+[1.0.2] - 02-22-2026
+
+Fixed naming of files
