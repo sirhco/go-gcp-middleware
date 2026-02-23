@@ -135,3 +135,13 @@ Updated package name and versioned correctly
 [1.0.2] - 02-22-2026
 
 Fixed naming of files
+
+### Changed
+[1.1.0] - 02-22-2026
+
+Downgrade some packages for compatability
+
+### Changed
+[1.2.0] - 02-23-2026
+
+Upgrade packages to see if semconv upgrade will fix compatability
