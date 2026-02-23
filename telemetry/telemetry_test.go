@@ -129,9 +129,9 @@ func TestConfig_Validate(t *testing.T) {
 		{
 			name: "valid config",
 			config: Config{
-				ServiceName: "test-service",
-				ProjectID:   "test-project",
-				TraceRatio:  0.5,
+				ServiceName:  "test-service",
+				ProjectID:    "test-project",
+				TraceRatio:   0.5,
 				MaxBatchSize: 512,
 				MaxQueueSize: 2048,
 			},

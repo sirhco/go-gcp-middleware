@@ -6,8 +6,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/sircho/go-gcp-middleware/logger"
-	"github.com/sircho/go-gcp-middleware/telemetry"
+	"github.com/sirhco/go-gcp-middleware/logger"
+	"github.com/sirhco/go-gcp-middleware/telemetry"
 )
 
 func TestHTTPMiddleware(t *testing.T) {

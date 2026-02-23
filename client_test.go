@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/sirch/go-gcp-middleware/logger"
+	"github.com/sirhco/go-gcp-middleware/logger"
 )
 
 func TestConfig_SetDefaults(t *testing.T) {
