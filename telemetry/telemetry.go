@@ -13,7 +13,7 @@ import (
 	"go.opentelemetry.io/otel/propagation"
 	"go.opentelemetry.io/otel/sdk/resource"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
-	semconv "go.opentelemetry.io/otel/semconv/v1.24.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.39.0"
 	"go.opentelemetry.io/otel/trace"
 )
 
@@ -181,7 +181,7 @@ func (p *Provider) createResource(ctx context.Context) (*resource.Resource, erro
 	baseAttrs := []attribute.KeyValue{
 		semconv.ServiceName(p.config.ServiceName),
 		semconv.ServiceVersion(p.config.ServiceVersion),
-		semconv.DeploymentEnvironment(p.config.Environment),
+		semconv.DeploymentEnvironmentName(p.config.Environment),
 	}
 
 	// Add custom attributes
